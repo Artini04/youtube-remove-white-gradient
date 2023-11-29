@@ -13,7 +13,6 @@
 (() => {
   const a = document.getElementsByClassName("ytp-gradient-bottom")[0] // Target node
   const config = { attributes: true }                                 // Observer config
-  const secondsObserverDisconnect = 7                                 // Seconds before observer disconnect
 
   start()
 
@@ -28,10 +27,5 @@
 
     const nodeObserver = new MutationObserver(listen)
     nodeObserver.observe(a, config)
-
-    setTimeout(() => {
-      nodeObserver.disconnect()
-      console.log("Observer disconnected!")
-    }, secondsObserverDisconnect * 1000)
   }
 })()
