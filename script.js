@@ -7,7 +7,7 @@
 // @author      artini04
 // @run-at      document-end
 // @description 11/29/2023, 10:59:41 AM
-// @license     MIT
+// @license     GPL 3.0
 // ==/UserScript==
 
 (() => {
