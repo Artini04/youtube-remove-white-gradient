@@ -1,31 +1,51 @@
 // ==UserScript==
 // @name        YouTube - Remove White Bottom Gradient
-// @namespace   Violentmonkey Scripts
-// @match       https://www.youtube.com/watch*
-// @grant       none
-// @version     0.1
+// @namespace   remove-white-bottom-gradient
+// @match       https://www.youtube.com/
+// @version     0.2
 // @author      artini04
 // @run-at      document-end
-// @description 11/29/2023, 10:59:41 AM
+// @description Remove the white bottom gradient in the video player control.
 // @license     GPL 3.0
 // ==/UserScript==
 
 (() => {
-  const a = document.getElementsByClassName("ytp-gradient-bottom")[0] // Target node
-  const config = { attributes: true }                                 // Observer config
+  console.log("[Remove White Bottom Gradient] script started!")
+
+  let oldURL = document.location.href
+  const body = document.body
+  const bodyConfig = { childList: true, subtree: true }
 
   start()
 
   // ==Main Function==
   function start() {
-    function listen(mutationList, observer) {
-      for (const mutation of mutationList) {
-        a.removeAttribute("style")
-        console.log("Removed gradient!")
+
+    // Set observer to the body element
+    const bodyObserverListener = (mutationList, observer) => {
+      if (oldURL != document.location.href) {
+        oldURL = document.location.href
+        console.log("Document changed!")
+
+        // ==Gradient Removal Start==
+        const gradientNode = document.getElementsByClassName("ytp-gradient-bottom")[0]  // Gradient element of the video player
+        const gradientNodeConfig = { attributes: true }                                 // Observer configuration, listen only to attribute changes
+
+        const gradientNodeObserver = new MutationObserver((gradientMutationList) => {
+          if (!gradientNode) return
+
+          for (const mutation of gradientMutationList) {
+            gradientNode.removeAttribute("style")
+            console.log("White gradient removed!")
+          }
+        })
+
+        gradientNodeObserver.observe(gradientNode, gradientNodeConfig)
+        // ==/Gradient Removal End==
       }
     }
 
-    const nodeObserver = new MutationObserver(listen)
-    nodeObserver.observe(a, config)
+    const bodyObserver = new MutationObserver(bodyObserverListener)
+    bodyObserver.observe(body, bodyConfig)
   }
 })()
