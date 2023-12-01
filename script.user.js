@@ -8,7 +8,7 @@
 // @author      artini04
 // @run-at      document-end
 // @description Remove the white bottom gradient in the video player control.
-// @license     GPL3
+// @license     GPL-3.0
 // ==/UserScript==
 
 ;(() => {
@@ -16,7 +16,6 @@
   const version = '0.2.2'
   console.log(`[Remove White Bottom Gradient] Script started!\nVersion ${version}`)
 
-  let currentURL = document.location.href
   const body = document.body
   const bodyConfig = { childList: true, subtree: true }
 
@@ -25,7 +24,7 @@
   // ==Main Function==
   function start() {
     const bodyObserverListener = () => {
-      if (currentURL.includes('watch')) {
+      if (document.location.href.includes('watch')) {
         // ==Gradient Removal Start==
         const gradientNode = document.getElementsByClassName('ytp-gradient-bottom')[0]
         if (!gradientNode) return // Just to be safe!
