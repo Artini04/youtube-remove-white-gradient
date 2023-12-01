@@ -8,7 +8,7 @@
 // @author      artini04
 // @run-at      document-end
 // @description Remove the white bottom gradient in the video player control.
-// @license     GPL 3.0
+// @license     GPL3
 // ==/UserScript==
 
 ;(() => {
